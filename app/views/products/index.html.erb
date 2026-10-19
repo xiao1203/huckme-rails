@@ -1,0 +1,20 @@
+<div class="breadcrumb"><%= link_to "ホーム", root_path %> &raquo; 商品一覧</div>
+
+<div class="section-title">
+  <span><% if params[:q].present? %>「<%= params[:q] %>」の検索結果<% else %>すべての商品<% end %></span>
+  <span style="font-size:13px; color:#6b7280; font-weight:400;"><%= @products.size %>件</span>
+</div>
+
+<div class="product-grid">
+  <% @products.each do |p| %>
+    <div class="product-card">
+      <div class="product-thumb">📦</div>
+      <div class="body">
+        <p class="name"><%= link_to p.name, product_path(p) %></p>
+        <div class="rating">★★★★☆ <span style="color:#6b7280;">(<%= rand(20..400) %>)</span></div>
+        <span class="badge-prime">お急ぎ便 対応</span>
+        <div class="price">¥<%= number_with_delimiter(p.price.to_i) %> <small>税込</small></div>
+      </div>
+    </div>
+  <% end %>
+</div>

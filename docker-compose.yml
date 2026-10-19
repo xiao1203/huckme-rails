@@ -1,0 +1,17 @@
+services:
+  web:
+    build: .
+    ports:
+      # Bound to localhost only — this app is intentionally vulnerable and must
+      # never be exposed to a public or shared network.
+      - "127.0.0.1:3000:3000"
+    environment:
+      RAILS_ENV: development
+    volumes:
+      - sqlite_data:/app/storage
+    # Pentesting tools (Strix/Cairn) run as separate processes/containers on the
+    # host and reach this app via http://localhost:3000 or http://host.docker.internal:3000
+    # from inside another container.
+
+volumes:
+  sqlite_data:

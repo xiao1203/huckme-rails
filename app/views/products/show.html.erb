@@ -1,0 +1,46 @@
+<div class="breadcrumb"><%= link_to "ホーム", root_path %> &raquo; <%= link_to "商品一覧", products_path %> &raquo; <%= @product.name %></div>
+
+<div class="layout-split">
+  <div>
+    <div class="card">
+      <div class="product-thumb" style="height:260px; font-size:64px; border-radius:6px;">📦</div>
+    </div>
+
+    <div class="card">
+      <h1 style="font-size:20px;"><%= @product.name %></h1>
+      <div class="rating" style="margin-bottom:10px;">★★★★☆ <span style="color:#6b7280;">カスタマーレビュー <%= @comments.size %>件</span></div>
+      <p style="color:#444; line-height:1.7;"><%= @product.description %></p>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:16px;">カスタマーレビュー</h2>
+      <% @comments.each do |c| %>
+        <div class="comment">
+          <div class="author">👤 <%= c.user.username %></div>
+          <!-- VULN (Stored XSS): comment body rendered with raw/html_safe, no sanitization. -->
+          <div class="body"><%= raw c.body %></div>
+        </div>
+      <% end %>
+
+      <% if logged_in? %>
+        <%= form_with url: product_comments_path(@product), method: :post, local: true, class: "form-group", style: "margin-top:16px;" do |f| %>
+          <label>レビューを書く</label>
+          <%= f.text_area :body, placeholder: "この商品はいかがでしたか？" %>
+          <p><%= f.submit "レビューを投稿する", class: "btn" %></p>
+        <% end %>
+      <% else %>
+        <p style="font-size:13px; color:#6b7280;"><%= link_to "ログイン", login_path %>するとレビューを投稿できます。</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div>
+    <div class="card price-box">
+      <div class="big">¥<%= number_with_delimiter(@product.price.to_i) %></div>
+      <p style="color:#1a7431; font-size:13px; font-weight:700;">在庫あり &middot; 明日中に到着</p>
+      <p style="font-size:13px; color:#6b7280;">お急ぎ便対応 / 返品30日間無料</p>
+      <button type="button" class="btn btn-block" style="margin-top:12px;">カートに入れる</button>
+      <button type="button" class="btn btn-secondary btn-block" style="margin-top:8px;">今すぐ購入</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="breadcrumb"><%= link_to "ホーム", root_path %> &raquo; サポート</div>
+<div class="section-title"><span>接続サポートツール</span></div>
+
+<div class="layout-split">
+  <div>
+    <div class="card">
+      <h2 style="font-size:16px;">サーバー接続確認（Ping）</h2>
+      <p style="color:#6b7280; font-size:13px;">配送先サーバーへの接続状況を確認します。</p>
+      <%= form_with url: diagnostics_ping_path, method: :post, local: true do |f| %>
+        <div class="form-group">
+          <%= f.text_field :host, value: "8.8.8.8" %>
+        </div>
+        <%= f.submit "接続確認", class: "btn" %>
+      <% end %>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:16px;">外部リンクのプレビュー</h2>
+      <p style="color:#6b7280; font-size:13px;">共有されたURLの内容を安全に確認します。</p>
+      <%= form_with url: diagnostics_fetch_url_path, method: :post, local: true do |f| %>
+        <div class="form-group">
+          <%= f.text_field :url, value: "http://example.com" %>
+        </div>
+        <%= f.submit "プレビュー取得", class: "btn" %>
+      <% end %>
+    </div>
+
+    <% if @output %>
+      <div class="card">
+        <h2 style="font-size:16px;">結果</h2>
+        <pre class="console-output"><%= @output %></pre>
+      </div>
+    <% end %>
+    <% if @preview %>
+      <div class="card">
+        <h2 style="font-size:16px;">プレビュー結果</h2>
+        <pre class="console-output"><%= @preview %></pre>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:16px;">よくある質問</h2>
+    <p style="font-size:13px; color:#6b7280;">配送の遅延や接続エラーが発生した場合は、上記ツールで状況をご確認いただけます。解決しない場合はサポートまでお問い合わせください。</p>
+  </div>
+</div>

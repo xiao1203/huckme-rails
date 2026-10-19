@@ -1,0 +1,25 @@
+<div style="max-width:420px; margin:20px auto;">
+  <div class="card">
+    <h1 style="font-size:20px; text-align:center;">新規会員登録</h1>
+    <p style="text-align:center; font-size:13px; color:#6b7280;">登録すると初回限定クーポンをプレゼント</p>
+    <%= form_with model: @user, url: signup_path, method: :post, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :username, "ユーザー名" %>
+        <%= f.text_field :username %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.text_field :email %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password, "パスワード" %>
+        <%= f.password_field :password %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, "パスワード（確認）" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+      <%= f.submit "登録する", class: "btn btn-block" %>
+    <% end %>
+  </div>
+</div>

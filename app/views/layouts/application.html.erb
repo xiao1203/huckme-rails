@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HuckMe Shop - 毎日のお買い物を、もっとお得に</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application" %>
+  </head>
+  <body>
+    <div class="topbar">今すぐ登録で初回限定クーポン配布中 &middot; 全国どこでも翌日配送</div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="<%= root_path %>" class="logo">Huck<span>Me</span></a>
+
+        <%= form_with url: products_path, method: :get, local: true, class: "search-form" do |f| %>
+          <%= f.text_field :q, placeholder: "商品名、ブランド、カテゴリーで検索", value: params[:q] %>
+          <%= f.submit "検索" %>
+        <% end %>
+
+        <nav class="header-nav">
+          <% if logged_in? %>
+            <a href="<%= invoices_path %>">注文履歴</a>
+            <a href="<%= documents_path %>">マイファイル</a>
+            <a href="<%= diagnostics_path %>">サポート</a>
+            <% if current_user.role == "admin" %>
+              <a href="<%= admin_users_path %>">管理画面</a>
+            <% end %>
+            <span>こんにちは、<%= current_user.username %>さん</span>
+            <%= button_to "ログアウト", logout_path, method: :delete, form: { style: "display:inline" } %>
+          <% else %>
+            <a href="<%= login_path %>">ログイン</a>
+            <a href="<%= signup_path %>">新規登録</a>
+          <% end %>
+          <a href="#" class="badge">🛒 カート 0</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="subnav">
+      <div class="header-inner">
+        <a href="<%= products_path %>">すべての商品</a>
+        <a href="<%= products_path %>">PC・ガジェット</a>
+        <a href="<%= products_path %>">デスク周り</a>
+        <a href="<%= products_path %>">タイムセール</a>
+        <a href="<%= products_path %>">本日のおすすすめ</a>
+      </div>
+    </div>
+
+    <% if notice %><div class="flash-notice"><%= notice %></div><% end %>
+    <% if alert %><div class="flash-alert"><%= alert %></div><% end %>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <footer class="site-footer">
+      <p>HuckMe Shop について &middot; ヘルプ &middot; 配送情報 &middot; 返品について &middot; プライバシーポリシー</p>
+      <p>&copy; 2026 HuckMe Shop — 本サイトはセキュリティツール検証用のデモ環境です。</p>
+    </footer>
+  </body>
+</html>

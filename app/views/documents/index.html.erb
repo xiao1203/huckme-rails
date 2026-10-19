@@ -1,0 +1,15 @@
+<div class="breadcrumb"><%= link_to "ホーム", root_path %> &raquo; マイファイル</div>
+<div class="section-title"><span>マイファイル</span></div>
+
+<div class="card">
+  <ul class="plain">
+    <% @documents.each do |d| %>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border);">
+        📄 <%= link_to d.filename, documents_download_path(filename: d.filename) %>
+      </li>
+    <% end %>
+  </ul>
+  <% if @documents.empty? %>
+    <p style="color:#6b7280; font-size:14px;">アップロードされたファイルはまだありません。</p>
+  <% end %>
+</div>
