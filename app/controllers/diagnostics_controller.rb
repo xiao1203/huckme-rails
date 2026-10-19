@@ -1,3 +1,6 @@
+require "net/http"
+require "uri"
+
 class DiagnosticsController < ApplicationController
   before_action :require_login
 
